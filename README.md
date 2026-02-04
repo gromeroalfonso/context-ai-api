@@ -1,5 +1,11 @@
 # Context.ai API
 
+[![CI](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/ci.yml/badge.svg)](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/codeql.yml/badge.svg)](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/codeql.yml)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.0.0-brightgreen)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/typescript-5.7-blue)](https://www.typescriptlang.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Backend API para el sistema RAG de Context.ai.
 
 ## 🏗️ Arquitectura
@@ -123,6 +129,68 @@ Los hooks se instalan automáticamente al ejecutar `pnpm install` gracias al scr
 git commit --no-verify -m "mensaje"
 git push --no-verify
 ```
+
+## 🔄 CI/CD con GitHub Actions
+
+El proyecto tiene configurados varios workflows automáticos que se ejecutan en GitHub Actions:
+
+### **CI Workflow** (`ci.yml`)
+
+Se ejecuta en cada push y pull request a `main` y `develop`:
+
+#### 1. **Lint Job**
+- ✅ Ejecuta ESLint en todo el código
+- ✅ Verifica el formato con Prettier
+- ✅ Usa cache de pnpm para optimizar velocidad
+
+#### 2. **Test Job**
+- ✅ Levanta PostgreSQL 16 + pgvector como servicio
+- ✅ Ejecuta todos los tests unitarios
+- ✅ Genera reporte de cobertura
+- ✅ Sube resultados a Codecov (opcional)
+- ✅ Requiere cobertura mínima del 80%
+
+#### 3. **Build Job**
+- ✅ Compila el proyecto TypeScript
+- ✅ Verifica que el output `dist/` sea válido
+- ✅ Solo se ejecuta si lint y tests pasan
+
+#### 4. **Security Job**
+- ✅ Ejecuta `pnpm audit` para detectar vulnerabilidades
+- ✅ Reporta dependencias con problemas de seguridad
+
+### **CodeQL Workflow** (`codeql.yml`)
+
+Análisis de seguridad automático de GitHub:
+- 🔍 Analiza el código en busca de vulnerabilidades
+- 🔍 Se ejecuta en push, PR y semanalmente (lunes a las 00:00 UTC)
+- 🔍 Usa queries extendidas de seguridad y calidad
+
+### **Release Workflow** (`release.yml`)
+
+Se ejecuta cuando creas un tag (ej: `v1.0.0`):
+- 📦 Ejecuta build y tests
+- 📦 Genera changelog automático
+- 📦 Crea un GitHub Release con notas
+
+### **Cómo Crear un Release**
+
+```bash
+# Crear tag localmente
+git tag -a v1.0.0 -m "Release v1.0.0"
+
+# Empujar tag a GitHub (esto dispara el workflow)
+git push origin v1.0.0
+```
+
+### **Badges de Estado**
+
+Los badges en el README muestran el estado actual de:
+- ✅ CI (tests, lint, build)
+- ✅ CodeQL (análisis de seguridad)
+- ✅ Versión de Node.js requerida
+- ✅ Versión de TypeScript
+- ✅ Licencia del proyecto
 
 ## 📚 Documentación API
 
