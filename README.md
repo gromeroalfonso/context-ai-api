@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/ci.yml/badge.svg)](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/codeql.yml/badge.svg)](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/codeql.yml)
+[![Snyk Security](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/snyk.yml/badge.svg)](https://github.com/gromeroalfonso/context-ai-api/actions/workflows/snyk.yml)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.0.0-brightgreen)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/typescript-5.7-blue)](https://www.typescriptlang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -165,6 +166,27 @@ Análisis de seguridad automático de GitHub:
 - 🔍 Analiza el código en busca de vulnerabilidades
 - 🔍 Se ejecuta en push, PR y semanalmente (lunes a las 00:00 UTC)
 - 🔍 Usa queries extendidas de seguridad y calidad
+
+### **Snyk Security Workflow** (`snyk.yml`)
+
+Escaneo de vulnerabilidades con Snyk:
+
+#### 1. **Snyk Test**
+- 🔒 Escanea dependencias npm en busca de vulnerabilidades
+- 🔒 Reporta solo severidades High y Critical
+- 🔒 Sube resultados a GitHub Security tab
+- 🔒 Se ejecuta en push, PR y diariamente
+
+#### 2. **Snyk Monitor**
+- 📊 Monitorea el proyecto continuamente en Snyk dashboard
+- 📊 Solo se ejecuta en push a main
+- 📊 Envía alertas cuando aparecen nuevas vulnerabilidades
+
+#### 3. **Snyk Docker**
+- 🐳 Escanea imágenes Docker (si existe Dockerfile)
+- 🐳 Detecta vulnerabilidades en base image y layers
+
+**Configuración**: Ver [docs/SNYK-SETUP.md](./docs/SNYK-SETUP.md) para instrucciones detalladas
 
 ### **Release Workflow** (`release.yml`)
 

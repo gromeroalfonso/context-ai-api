@@ -1,0 +1,42 @@
+# Snyk (https://snyk.io) policy file
+
+# Ignores
+ignore:
+  # Ejemplo de cómo ignorar vulnerabilidades específicas si es necesario
+  # 'SNYK-JS-PACKAGE-ID':
+  #   - '*':
+  #     reason: 'Explicación de por qué se ignora'
+  #     expires: '2026-12-31T00:00:00.000Z'
+
+# Patch settings
+patch: {}
+
+# Language settings
+language-settings:
+  node:
+    # Nivel mínimo de severidad para reportar
+    severity-threshold: high
+    
+    # Ignorar devDependencies en producción
+    dev: false
+
+# Excluir directorios del escaneo
+exclude:
+  # Node modules
+  - node_modules/
+  
+  # Build output
+  - dist/
+  - build/
+  
+  # Test files
+  - test/
+  - '**/*.spec.ts'
+  - '**/*.test.ts'
+  
+  # Coverage
+  - coverage/
+  
+  # Documentation
+  - docs/
+
