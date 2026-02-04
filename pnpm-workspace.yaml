@@ -1,0 +1,2 @@
+overrides:
+  '@context-ai/shared': link:../context-ai-shared

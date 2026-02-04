@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: contextai-db
+    environment:
+      POSTGRES_DB: contextai
+      POSTGRES_USER: contextai_user
+      POSTGRES_PASSWORD: dev_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contextai_user -d contextai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - contextai-network
+
+volumes:
+  postgres_data:
+
+networks:
+  contextai-network:
+    driver: bridge
+
