@@ -16,7 +16,7 @@ Este documento define la estrategia de branching para el desarrollo del MVP de C
   - CI/CD corre automáticamente
   - Tags para releases (v1.0.0, v1.1.0, etc.)
 
-- **`develop`**: (Opcional) Branch de integración continua
+- **`develop`**: Branch de integración continua
   - Si se usa, todas las features se mergean aquí primero
   - Periódicamente se mergea a `main`
 
