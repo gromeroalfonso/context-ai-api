@@ -29,14 +29,13 @@ import {
  * - Token count limits enforced
  */
 @Entity('fragments')
-@Index(['source_id'])
+@Index(['sourceId'])
 @Index(['position'])
 export class FragmentModel {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column({ name: 'source_id', type: 'uuid' })
-  @Index()
   sourceId!: string;
 
   @Column({ type: 'text' })

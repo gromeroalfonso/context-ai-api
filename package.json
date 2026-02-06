@@ -18,6 +18,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:integration": "jest --config ./test/jest-integration.json --runInBand",
+    "test:integration:watch": "jest --config ./test/jest-integration.json --watch --runInBand",
+    "test:integration:cov": "jest --config ./test/jest-integration.json --coverage --runInBand",
+    "test:all": "npm run test && npm run test:integration && npm run test:e2e",
     "typeorm": "typeorm-ts-node-commonjs -d src/config/typeorm.config.ts",
     "migration:generate": "npm run typeorm -- migration:generate src/migrations",
     "migration:create": "npm run typeorm -- migration:create src/migrations",
@@ -108,6 +112,11 @@
       "<rootDir>/test"
     ],
     "testRegex": ".*\\.spec\\.ts$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/test/integration/",
+      "/test/e2e/"
+    ],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },

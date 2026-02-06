@@ -3,7 +3,7 @@ import { KnowledgeSourceModel } from '../../src/modules/knowledge/infrastructure
 import { FragmentModel } from '../../src/modules/knowledge/infrastructure/persistence/models/fragment.model';
 
 // Test database configuration constants
-const TEST_DB_PORT = 5432;
+const TEST_DB_PORT = 5433; // Updated to match current Docker setup
 const TEST_DB_POOL_SIZE = 5;
 
 /**
@@ -18,16 +18,16 @@ export const testDbConfig: TypeOrmModuleOptions = {
   type: 'postgres',
   host: process.env.TEST_DB_HOST || 'localhost',
   port: parseInt(process.env.TEST_DB_PORT || String(TEST_DB_PORT), 10),
-  username: process.env.TEST_DB_USERNAME || 'context_ai_user',
-  password: process.env.TEST_DB_PASSWORD || 'context_ai_pass',
-  database: process.env.TEST_DB_DATABASE || 'context_ai_test',
+  username: process.env.TEST_DB_USERNAME || 'contextai_user',
+  password: process.env.TEST_DB_PASSWORD || 'dev_password',
+  database: process.env.TEST_DB_DATABASE || 'contextai',
 
   // Entities
   entities: [KnowledgeSourceModel, FragmentModel],
 
-  // Synchronize schema for tests (recreate on each run)
+  // Synchronize schema for tests
   synchronize: true,
-  dropSchema: true, // Drop and recreate schema on each test run
+  dropSchema: true, // Drop and recreate schema for each test suite
 
   // Logging
   logging: process.env.TEST_DB_LOGGING === 'true',

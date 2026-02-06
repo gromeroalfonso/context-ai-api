@@ -45,6 +45,12 @@ export interface IKnowledgeRepository {
   findSourcesByStatus(status: string): Promise<KnowledgeSource[]>;
 
   /**
+   * Soft deletes a knowledge source (marks as deleted)
+   * @param id - The source ID to soft delete
+   */
+  softDeleteSource(id: string): Promise<void>;
+
+  /**
    * Deletes a knowledge source (hard delete)
    * @param id - The source ID to delete
    */

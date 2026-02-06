@@ -26,9 +26,8 @@ import { SourceType, SourceStatus } from '@context-ai/shared';
  * - Metadata validation in entity layer
  */
 @Entity('knowledge_sources')
-@Index(['sector_id', 'status'])
+@Index(['sectorId', 'status'])
 @Index(['status'])
-@Index(['deleted_at'])
 export class KnowledgeSourceModel {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
@@ -37,7 +36,6 @@ export class KnowledgeSourceModel {
   title!: string;
 
   @Column({ name: 'sector_id', type: 'uuid' })
-  @Index()
   sectorId!: string;
 
   @Column({
@@ -55,8 +53,10 @@ export class KnowledgeSourceModel {
     enum: ['PENDING', 'PROCESSING', 'PROCESSED', 'FAILED'],
     default: 'PENDING',
   })
-  @Index()
   status!: SourceStatus;
+
+  @Column({ name: 'error_message', type: 'text', nullable: true })
+  errorMessage: string | null = null;
 
   @Column({ type: 'jsonb', nullable: true })
   metadata: Record<string, unknown> | null = null;

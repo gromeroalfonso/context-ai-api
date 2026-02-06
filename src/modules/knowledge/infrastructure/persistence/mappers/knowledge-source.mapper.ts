@@ -50,12 +50,16 @@ export class KnowledgeSourceMapper {
   static toModel(entity: KnowledgeSource): KnowledgeSourceModel {
     const model = new KnowledgeSourceModel();
 
-    model.id = entity.id ?? '';
+    // Only set id if it exists (for updates), let TypeORM generate it for new entities
+    if (entity.id) {
+      model.id = entity.id;
+    }
     model.title = entity.title;
     model.sectorId = entity.sectorId;
     model.sourceType = entity.sourceType;
     model.content = entity.content;
     model.status = entity.status as SourceStatus;
+    model.errorMessage = null; // Initialize error message
     model.metadata = (entity.metadata as Record<string, unknown>) ?? null;
     model.createdAt = entity.createdAt;
     model.updatedAt = entity.updatedAt;

@@ -123,6 +123,10 @@ export class KnowledgeRepository implements IKnowledgeRepository {
     return KnowledgeSourceMapper.toDomainArray(models);
   }
 
+  async softDeleteSource(id: string): Promise<void> {
+    await this.sourceRepository.softDelete(id);
+  }
+
   async deleteSource(id: string): Promise<void> {
     await this.sourceRepository.delete(id);
   }

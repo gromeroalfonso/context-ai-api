@@ -7,6 +7,9 @@ import { FragmentModel } from '@modules/knowledge/infrastructure/persistence/mod
 // Default embedding dimension for temporary embeddings
 const DEFAULT_EMBEDDING_DIMENSION = 768;
 
+// Token estimation constant (words per token ratio)
+const WORDS_PER_TOKEN_RATIO = 0.75;
+
 /**
  * Fragment Mapper
  *
@@ -66,12 +69,21 @@ export class FragmentMapper {
   static toModel(entity: Fragment): FragmentModel {
     const model = new FragmentModel();
 
-    model.id = entity.id ?? '';
+    // Only set id if it exists (for updates), let TypeORM generate it for new entities
+    if (entity.id) {
+      model.id = entity.id;
+    }
     model.sourceId = entity.sourceId;
     model.content = entity.content;
     model.embedding = this.serializeEmbedding(entity.embedding);
     model.position = entity.position;
-    model.tokenCount = Reflect.get(entity, 'tokenCount') as number;
+
+    // Calculate token count if not set (simple estimation: words / WORDS_PER_TOKEN_RATIO)
+    const tokenCount = Reflect.get(entity, 'tokenCount') as number | undefined;
+    model.tokenCount =
+      tokenCount ??
+      Math.ceil(entity.content.split(/\s+/).length / WORDS_PER_TOKEN_RATIO);
+
     model.metadata = (entity.metadata as Record<string, unknown>) ?? null;
     model.createdAt = entity.createdAt;
     model.updatedAt = Reflect.get(entity, 'updatedAt') as Date;
