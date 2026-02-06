@@ -104,6 +104,7 @@ export class DocumentParserService {
         for (const key of infoKeys) {
           const value = metadata.info[key as keyof typeof metadata.info];
           if (typeof value === 'string') {
+            // eslint-disable-next-line security/detect-object-injection -- Safe: key is from const array of known PDF metadata keys, type-checked before assignment
             pdfInfo[key] = value;
           }
         }

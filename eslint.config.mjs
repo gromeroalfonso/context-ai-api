@@ -1,6 +1,7 @@
 // @ts-check
 import eslint from '@eslint/js';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import security from 'eslint-plugin-security';
 import sonarjs from 'eslint-plugin-sonarjs';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -13,6 +14,7 @@ export default tseslint.config(
   ...tseslint.configs.recommendedTypeChecked,
   eslintPluginPrettierRecommended,
   sonarjs.configs.recommended,
+  security.configs.recommended,
   {
     languageOptions: {
       globals: {

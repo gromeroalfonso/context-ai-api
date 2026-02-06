@@ -118,6 +118,7 @@ export class IngestDocumentUseCase {
         (chunk: TextChunk, index: number) => {
           const content: string = chunk.content;
           const position: number = chunk.position;
+          // eslint-disable-next-line security/detect-object-injection -- Safe: index from map() is guaranteed to be valid array index
           const embedding: number[] = embeddings[index];
           const metadata: FragmentMetadata = {
             startIndex: chunk.startIndex,
