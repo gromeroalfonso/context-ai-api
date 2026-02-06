@@ -79,7 +79,7 @@ class UploadDocumentDto {
   @ApiProperty({
     description: 'Source type',
     enum: SourceType,
-    example: SourceType.PDF,
+    example: 'PDF' as SourceType,
   })
   sourceType!: SourceType;
 
@@ -218,9 +218,9 @@ export class KnowledgeController {
         },
         sourceType: {
           type: 'string',
-          enum: Object.values(SourceType),
+          enum: Object.values(SourceType) as string[],
           description: 'Type of document',
-          example: SourceType.PDF,
+          example: 'PDF',
         },
         metadata: {
           type: 'object',
@@ -350,12 +350,13 @@ export class KnowledgeController {
     }
 
     // Validate sourceType
+    const validSourceTypes: string[] = Object.values(SourceType);
     if (
       !dto.sourceType ||
-      !Object.values(SourceType).includes(dto.sourceType)
+      !validSourceTypes.includes(dto.sourceType as string)
     ) {
       throw new BadRequestException(
-        `SourceType must be one of: ${Object.values(SourceType).join(', ')}`,
+        `SourceType must be one of: ${validSourceTypes.join(', ')}`,
       );
     }
   }

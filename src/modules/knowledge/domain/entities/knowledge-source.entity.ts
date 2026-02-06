@@ -83,7 +83,8 @@ export class KnowledgeSource {
       throw new Error('SectorId cannot be empty');
     }
 
-    if (!Object.values(SourceType).includes(data.sourceType)) {
+    const validSourceTypes: string[] = Object.values(SourceType);
+    if (!validSourceTypes.includes(data.sourceType as string)) {
       throw new Error('Invalid source type');
     }
 

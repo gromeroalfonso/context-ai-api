@@ -32,12 +32,13 @@ export class KnowledgeSourceMapper {
       metadata: model.metadata as SourceMetadata | undefined,
     });
 
-    // Set persisted fields using Reflect to avoid type errors
-    Reflect.set(source, 'id', model.id);
-    Reflect.set(source, 'status', model.status);
-    Reflect.set(source, 'createdAt', model.createdAt);
-    Reflect.set(source, 'updatedAt', model.updatedAt);
-    Reflect.set(source, 'deletedAt', model.deletedAt ?? undefined);
+    // Set persisted fields using direct assignment with type assertions
+    // These fields are readonly in the entity but can be set during hydration
+    (source as { id?: string }).id = model.id;
+    (source as { status: string }).status = model.status;
+    (source as { createdAt: Date }).createdAt = model.createdAt;
+    (source as { updatedAt: Date }).updatedAt = model.updatedAt;
+    (source as { deletedAt?: Date }).deletedAt = model.deletedAt ?? undefined;
 
     return source;
   }
@@ -59,8 +60,10 @@ export class KnowledgeSourceMapper {
     model.sourceType = entity.sourceType;
     model.content = entity.content;
     model.status = entity.status as SourceStatus;
-    model.errorMessage = null; // Initialize error message
-    model.metadata = (entity.metadata as Record<string, unknown>) ?? null;
+    model.errorMessage = null;
+    model.metadata = entity.metadata
+      ? (entity.metadata as Record<string, unknown>)
+      : null;
     model.createdAt = entity.createdAt;
     model.updatedAt = entity.updatedAt;
     model.deletedAt = entity.deletedAt ?? null;

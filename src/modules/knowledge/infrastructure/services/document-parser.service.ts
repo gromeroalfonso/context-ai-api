@@ -56,13 +56,16 @@ export class DocumentParserService {
   async parse(buffer: Buffer, sourceType: SourceType): Promise<ParsedDocument> {
     this.validateBuffer(buffer);
 
-    switch (sourceType) {
-      case SourceType.PDF:
-        return this.parsePdf(buffer);
-      case SourceType.MARKDOWN:
-        return this.parseMarkdown(buffer);
-      default:
-        throw new Error(`Unsupported source type: ${sourceType}`);
+    const sourceTypeStr = sourceType as string;
+    const PDF = 'PDF';
+    const MARKDOWN = 'MARKDOWN';
+
+    if (sourceTypeStr === PDF) {
+      return this.parsePdf(buffer);
+    } else if (sourceTypeStr === MARKDOWN) {
+      return this.parseMarkdown(buffer);
+    } else {
+      throw new Error(`Unsupported source type: ${sourceType}`);
     }
   }
 
@@ -126,10 +129,11 @@ export class DocumentParserService {
 
       const content = this.normalizeContent(textParts.join('\n\n'));
 
+      const PDF: string = SourceType.PDF;
       return {
         content,
         metadata: {
-          sourceType: SourceType.PDF,
+          sourceType: PDF as SourceType,
           parsedAt: new Date().toISOString(),
           originalSize: buffer.length,
           pages: numPages,
@@ -157,10 +161,11 @@ export class DocumentParserService {
 
       const content = this.normalizeContent(plainText);
 
+      const MARKDOWN: string = SourceType.MARKDOWN;
       return Promise.resolve({
         content,
         metadata: {
-          sourceType: SourceType.MARKDOWN,
+          sourceType: MARKDOWN as SourceType,
           parsedAt: new Date().toISOString(),
           originalSize: buffer.length,
         },

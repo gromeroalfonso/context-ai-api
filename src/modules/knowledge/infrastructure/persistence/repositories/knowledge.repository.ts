@@ -119,7 +119,10 @@ export class KnowledgeRepository implements IKnowledgeRepository {
   }
 
   async findSourcesByStatus(status: SourceStatus): Promise<KnowledgeSource[]> {
-    const models = await this.sourceRepository.find({ where: { status } });
+    const statusValue: SourceStatus = status;
+    const models = await this.sourceRepository.find({
+      where: { status: statusValue },
+    });
     return KnowledgeSourceMapper.toDomainArray(models);
   }
 
