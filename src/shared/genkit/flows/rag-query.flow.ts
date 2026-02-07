@@ -64,6 +64,7 @@ export const ragQueryOutputSchema = z.object({
   response: z.string(),
   sources: z.array(fragmentSchema),
   conversationId: z.string().optional(),
+  timestamp: z.date(),
   metadata: z
     .object({
       model: z.string(),
@@ -172,6 +173,7 @@ export function createRagQueryService(vectorSearch: VectorSearchFn) {
         response: FALLBACK_RESPONSE,
         sources: [],
         conversationId: validatedInput.conversationId,
+        timestamp: new Date(),
         metadata: {
           model: GENKIT_CONFIG.LLM_MODEL,
           temperature: GENKIT_CONFIG.RAG_GENERATION_CONFIG.temperature,
@@ -196,6 +198,7 @@ export function createRagQueryService(vectorSearch: VectorSearchFn) {
       response: result.text,
       sources: relevantFragments,
       conversationId: validatedInput.conversationId,
+      timestamp: new Date(),
       metadata: {
         model: GENKIT_CONFIG.LLM_MODEL,
         temperature: GENKIT_CONFIG.RAG_GENERATION_CONFIG.temperature,
