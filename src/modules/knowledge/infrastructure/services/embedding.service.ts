@@ -98,7 +98,7 @@ export class EmbeddingService {
       model: config?.model ?? DEFAULT_EMBEDDING_MODEL,
       dimensions: config?.dimensions ?? DEFAULT_EMBEDDING_DIMENSIONS,
       batchSize: config?.batchSize ?? DEFAULT_BATCH_SIZE,
-      apiKey: config?.apiKey ?? process.env.GOOGLE_GENAI_API_KEY,
+      apiKey: config?.apiKey ?? process.env.GOOGLE_API_KEY,
     };
 
     this.validateConfig();
@@ -131,9 +131,7 @@ export class EmbeddingService {
   private getAI(): Genkit {
     if (!this.ai) {
       if (!this.config.apiKey) {
-        throw new Error(
-          'GOOGLE_GENAI_API_KEY environment variable is required',
-        );
+        throw new Error('GOOGLE_API_KEY environment variable is required');
       }
 
       this.ai = genkit({

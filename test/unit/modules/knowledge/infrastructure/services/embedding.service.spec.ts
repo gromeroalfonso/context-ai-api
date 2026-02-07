@@ -30,14 +30,14 @@ describe('EmbeddingService', () => {
     mockEmbedFn.mockClear();
 
     // Set default API key for tests
-    process.env.GOOGLE_GENAI_API_KEY = 'test-api-key';
+    process.env.GOOGLE_API_KEY = 'test-api-key';
 
     service = new EmbeddingService();
   });
 
   afterEach(() => {
     // Clean up
-    delete process.env.GOOGLE_GENAI_API_KEY;
+    delete process.env.GOOGLE_API_KEY;
   });
 
   describe('Configuration', () => {
@@ -159,13 +159,13 @@ describe('EmbeddingService', () => {
 
     it('should throw error if API key is missing', async () => {
       // Arrange
-      delete process.env.GOOGLE_GENAI_API_KEY;
+      delete process.env.GOOGLE_API_KEY;
       const serviceWithoutKey = new EmbeddingService();
       const text = 'Test text';
 
       // Act & Assert
       await expect(serviceWithoutKey.generateEmbedding(text)).rejects.toThrow(
-        'GOOGLE_GENAI_API_KEY environment variable is required',
+        'GOOGLE_API_KEY environment variable is required',
       );
     });
 
