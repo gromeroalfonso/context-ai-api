@@ -44,3 +44,6 @@ lerna-debug.log*
 # Temp
 /temp
 /tmp
+
+# Genkit runtime files
+.genkit/
