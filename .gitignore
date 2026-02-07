@@ -47,3 +47,5 @@ lerna-debug.log*
 
 # Genkit runtime files
 .genkit/
+# Backup files
+*.backup
